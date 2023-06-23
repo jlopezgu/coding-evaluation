@@ -1,18 +1,20 @@
 package com.aa.act.interview.org;
 
+import java.util.UUID;
+
 public class Employee {
 
-    private int identifier;
+    private UUID identifier;
     private Name name;
 
-    public Employee(int identifier, Name name) {
+    public Employee(Name name) {
         if(name == null)
             throw new IllegalArgumentException("name cannot be null");
-        this.identifier = identifier;
+        this.identifier = java.util.UUID.randomUUID();
         this.name = name;
     }
     
-    public int getIdentifier() {
+    public UUID getIdentifier() {
         return identifier;
     }
     

@@ -1,5 +1,6 @@
 package com.aa.act.interview.org;
 
+import java.util.Collection;
 import java.util.Optional;
 
 public abstract class Organization {
@@ -19,9 +20,28 @@ public abstract class Organization {
      * @param title
      * @return the newly filled position or empty if no position has that title
      */
-    public Optional<Position> hire(Name person, String title) {
-        //your code here
-        return Optional.empty();
+    public Optional<Position> hire(Name person, String title)
+    {
+        return findAndFillPosition(this.root, title, person);
+    }
+
+    public Optional<Position> findAndFillPosition(Position position, String title, Name person)
+    {
+        if (position.getTitle().equals(title))
+        {
+            position.setEmployee(Optional.of(new Employee(person)));
+            return Optional.of(position);
+        }
+
+        Collection<Position> directReports = position.getDirectReports();
+        for (Position directReport : directReports)
+        {
+            Optional<Position> result = findAndFillPosition(directReport, title, person);
+            if(result != null){
+                return result;
+            }
+        }
+        return null;
     }
 
     @Override
